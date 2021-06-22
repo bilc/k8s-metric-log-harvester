@@ -1,0 +1,43 @@
+global:
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  evaluation_interval: 15s
+scrape_configs:
+- job_name: pod-scrape
+  honor_timestamps: true
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  metrics_path: /test-metric
+  scheme: http
+  relabel_configs:
+  - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+    separator: ;
+    regex: "true"
+    replacement: $1
+    action: keep
+  - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scheme]
+    separator: ;
+    regex: (.+)
+    target_label: __scheme__
+    replacement: $1
+    action: replace
+  - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+    separator: ;
+    regex: (.+)
+    target_label: __metrics_path__
+    replacement: $1
+    action: replace
+  - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+    separator: ;
+    regex: ([^:]+)(?::\d+)?;(\d+)
+    target_label: __address__
+    replacement: $1:$2
+    action: replace
+  kubernetes_sd_configs:
+  - api_server: https://127.0.0.1:6443
+    role: pod
+    tls_config:
+      ca_file: /root/kubernetes-deploy/cert/ca.pem
+      cert_file: /root/kubernetes-deploy/cert/admin.pem
+      key_file: /root/kubernetes-deploy/cert/admin-key.pem
+      insecure_skip_verify: true
