@@ -4,8 +4,8 @@
 #export KAFKA_BROKERS=\"127.0.0.1\"
 #export KAFKA_TOPIC=hello
 export ES_ENTRIES='"127.0.0.1:9200"'
-export LOG_TAG=BAIDU_LOG
-export CLUSTER_NAME=baidu
+export LOG_TAG=BILC_LOG
+export CLUSTER_NAME=bilc
 INPUT_TPL='
 filebeat.config.inputs:
   enabled: true

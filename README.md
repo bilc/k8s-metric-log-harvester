@@ -38,7 +38,7 @@ spec:
     - name: log-vol
       mountPath: /data/log
     env:
-    - name: BAIDU_LOG               // log
+    - name: BILC_LOG               // log
       value:  /data/log/nginx/*     // 这里必须要使用通配符，多个路径用冒号分割
   volumes:
   - name: log-vol

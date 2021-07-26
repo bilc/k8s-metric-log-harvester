@@ -1,5 +1,5 @@
-#export LOG_TAG=BAIDU_LOG
-#export CLUSTER_NAME=baidu
+#export LOG_TAG=BILC_LOG
+#export CLUSTER_NAME=bilc
 function generate() {
 containerLen=`crictl ps  -o json | jq '.containers|length' `
 #delete the disappear container config
